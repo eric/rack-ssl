@@ -122,4 +122,16 @@ class TestSSL < Test::Unit::TestCase
     assert_equal "https://example.co.uk/path?key=value",
       last_response.headers['Location']
   end
+
+  def test_array_of_set_cookies
+    default_app = lambda { |env|
+      headers = {'Content-Type' => "text/html"}
+      headers['Set-Cookie'] = [ "id=1; path=/", "token=abc; path=/; secure; HttpOnly" ]
+      [200, headers, ["OK"]]
+    }
+    self.app = Rack::SSL.new(default_app)
+    get "https://example.org/"
+    assert_equal ["id=1; path=/; secure", "token=abc; path=/; secure; HttpOnly"],
+      last_response.headers['Set-Cookie']
+  end
 end
