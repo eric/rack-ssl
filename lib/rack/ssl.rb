@@ -79,7 +79,7 @@ module Rack
             end
           end
 
-          headers['Set-Cookie'] = cookies.join("\n") if headers['Set-Cookie'].is_a?(String)
+          headers['Set-Cookie'] = cookies.join("\n")
         end
       end
   end

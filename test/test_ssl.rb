@@ -118,7 +118,7 @@ class TestSSL < Test::Unit::TestCase
     }
     self.app = Rack::SSL.new(default_app)
     get "https://example.org/"
-    assert_equal ["id=1; path=/; secure", "token=abc; path=/; secure; HttpOnly"],
+    assert_equal "id=1; path=/; secure\ntoken=abc; path=/; secure; HttpOnly",
       last_response.headers['Set-Cookie']
   end
 end
