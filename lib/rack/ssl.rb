@@ -72,7 +72,7 @@ module Rack
           cookies = cookies.split("\n") if cookies.is_a?(String)
 
           cookies.map! do |cookie|
-            if cookie !~ / secure;/
+            if cookie !~ /; secure(;|$)/
               "#{cookie}; secure"
             else
               cookie
